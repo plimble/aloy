@@ -1,0 +1,28 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.DS_Store": true,
+        "app": true
+    },
+	"editor.fontSize": 12,
+	"editor.lineHeight": 20,
+    "editor.tabSize": 4,
+    "files.trimTrailingWhitespace": true,
+	"go.buildOnSave": true,
+    "go.lintOnSave": true,
+    "go.vetOnSave": true,
+    "go.buildFlags": [],
+    "go.lintFlags": ["-min_confidenc=.8"],
+    "go.vetFlags": ["-all"],
+    "go.useCodeSnippetsOnFunctionSuggest": false,
+    "go.formatOnSave": true,
+    "go.formatTool": "gofmt",
+    "go.goroot": "/usr/local/go",
+    "editor.scrollBeyondLastLine": false,
+    "javascript.validate.enable": false,
+    "tslint.enable": false,
+    "editor.formatOnType": false,
+    "explorer.openEditors.visible": 0
+}
