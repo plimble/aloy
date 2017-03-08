@@ -102,9 +102,9 @@ func (s *Store) DeleteCommit(commitId string) error {
 	return nil
 }
 
-func (s *Store) GetRepositoryByName(repositoryName string) (*entity.Repository, error) {
+func (s *Store) GetRepository(repositoryName, repositoryOwnerName, repositorySource string) (*entity.Repository, error) {
 	var repository *entity.Repository
-	err := s.db.QueryRow("SELECT * FROM repositorys WHERE name=?", repositoryName).Scan(&repository)
+	err := s.db.QueryRow("SELECT * FROM repositorys WHERE name=? AND owner_name=? AND source=?", repositoryName, repositoryOwnerName, repositorySource).Scan(&repository)
 
 	if err == sql.ErrNoRows {
 		return nil, errors.NotFound(err.Error())
