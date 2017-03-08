@@ -7,9 +7,8 @@ import (
 	"github.com/plimble/aloy/services/webhook"
 )
 
-func NewUsecase() aloy.UsecaseInterface {
+func NewUsecase(cfg *config.Config) aloy.UsecaseInterface {
 	s := &aloy.Services{}
-	cfg := config.Get()
 
 	s.SetConfig(cfg)
 	s.SetWebhook(webhook.New())
