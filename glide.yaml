@@ -1,0 +1,3 @@
+package: github.com/plimble/aloy
+import:
+  - package: github.com/plimble/envconfig
