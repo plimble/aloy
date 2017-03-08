@@ -1,3 +1,8 @@
 package: github.com/plimble/aloy
 import:
   - package: github.com/plimble/envconfig
+  - package: github.com/plimble/validator
+  - package: github.com/plimble/errors
+  - package: github.com/stretchr/testify
+    subpackages:
+    - mock

@@ -1,6 +1,14 @@
-hash: 18848ebe9c2f767a993fc0a310f66f6f85093de898f2cd03151c7b8be4cc4688
-updated: 2017-03-08T20:37:26.870531171+07:00
+hash: fe5bd306b47a9fb5c601683a7cb420bb07071c22fe2ccea3b799182a7cd8d2c5
+updated: 2017-03-08T21:22:46.59881775+07:00
 imports:
 - name: github.com/plimble/envconfig
   version: ca2b88252414b92b1f5eaba41c619b9cc8c4c2c8
+- name: github.com/plimble/errors
+  version: 7305b41d387098ff68e1b661e21d53b9130a1bd1
+- name: github.com/plimble/validator
+  version: aab96f5c8c106b4bd2c4add9d81d39b22285f8fa
+- name: github.com/stretchr/testify
+  version: 4d4bfba8f1d1027c4fdbe371823030df51419987
+  subpackages:
+  - mock
 testImports: []
