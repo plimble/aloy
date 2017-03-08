@@ -16,4 +16,5 @@ type Store interface {
 	GetAllRepositorys(limit, offset int) ([]*entity.Repository, error)
 	GetAllCommitsByRepository(repositoryId string, limit, offset int) ([]*entity.Commit, error)
 	GetAllCommitsByName(name string, limit, offset int) ([]*entity.Commit, error)
+	GetAllCommitsByRepositoryAndRef(repositoryId, ref string, limit, offset int) ([]*entity.Commit, error)
 }

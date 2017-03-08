@@ -14,6 +14,7 @@ type Service interface {
 	GetAllRepositorys(*GetAllRepositorysReq) (*GetAllRepositorysRes, error)
 	GetAllCommitsByRepository(*GetAllCommitsByRepositoryReq) (*GetAllCommitsByRepositoryRes, error)
 	GetAllCommitsByName(*GetAllCommitsByNameReq) (*GetAllCommitsByNameRes, error)
+	GetAllCommitsByRepositoryAndRef(*GetAllCommitsByRepositoryAndRefReq) (*GetAllCommitsByRepositoryAndRefRes, error)
 }
 
 type CoverageService struct {

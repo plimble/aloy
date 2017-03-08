@@ -8,11 +8,9 @@ type Commit struct {
 	Id           string
 	RepositoryId string
 	Ref          string
-
 	SenderName   string
 	SenderAvatar string
-
-	CreatedAt string
+	CreatedAt    string
 }
 
 func NewCommit(commitId, repositoryId, ref, senderName, senderAvatar string) *Commit {

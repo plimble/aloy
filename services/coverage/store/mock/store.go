@@ -112,6 +112,29 @@ func (_m *Store) GetAllCommitsByRepository(repositoryId string, limit int, offse
 	return r0, r1
 }
 
+// GetAllCommitsByRepositoryAndRef provides a mock function with given fields: repositoryId, ref, limit, offset
+func (_m *Store) GetAllCommitsByRepositoryAndRef(repositoryId string, ref string, limit int, offset int) ([]*entity.Commit, error) {
+	ret := _m.Called(repositoryId, ref, limit, offset)
+
+	var r0 []*entity.Commit
+	if rf, ok := ret.Get(0).(func(string, string, int, int) []*entity.Commit); ok {
+		r0 = rf(repositoryId, ref, limit, offset)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]*entity.Commit)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(string, string, int, int) error); ok {
+		r1 = rf(repositoryId, ref, limit, offset)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // GetAllRepositorys provides a mock function with given fields: limit, offset
 func (_m *Store) GetAllRepositorys(limit int, offset int) ([]*entity.Repository, error) {
 	ret := _m.Called(limit, offset)
