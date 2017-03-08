@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 
 	"github.com/plimble/errors"
-	"github.com/plimble/validator"
 )
 
 type ServiceInterface interface {
@@ -19,10 +18,8 @@ func New() *Service {
 }
 
 func (s *Service) ParseGithubWebhook(payload string) (*Webhook, error) {
-	v := validator.New()
-	v.RequiredString(payload, "payload")
-	if err := v.GetError(); err != nil {
-		return nil, errors.BadRequestErr(err)
+	if payload == "" {
+		return nil, errors.BadRequest("payload is missing")
 	}
 
 	gwh := &GithubWebHookResult{}
@@ -32,10 +29,8 @@ func (s *Service) ParseGithubWebhook(payload string) (*Webhook, error) {
 }
 
 func (s *Service) ParseGitlabWebhook(payload string) (*Webhook, error) {
-	v := validator.New()
-	v.RequiredString(payload, "payload")
-	if err := v.GetError(); err != nil {
-		return nil, errors.BadRequestErr(err)
+	if payload == "" {
+		return nil, errors.BadRequest("payload is missing")
 	}
 
 	gwh := &GitlabWebhookResult{}
