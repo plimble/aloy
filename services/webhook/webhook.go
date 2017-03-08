@@ -8,4 +8,5 @@ type Webhook struct {
 	RepoName       string
 	RepoHomepage   string
 	RepoDesciption string
+	HTTPURL        string
 }

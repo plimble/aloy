@@ -5,6 +5,7 @@ type GitlabProjectWebhookResult struct {
 	Description       string `json:"description"`
 	Homepage          string `json:"homepage"`
 	PathWithNamespace string `json:"path_with_namespace"`
+	HTTPURL           string `json:"http_url"`
 }
 
 type GitlabWebhookResult struct {
@@ -24,5 +25,6 @@ func (g *GitlabWebhookResult) MapToWebHook() *Webhook {
 		RepoName:       g.Project.PathWithNamespace,
 		RepoHomepage:   g.Project.Homepage,
 		RepoDesciption: g.Project.Description,
+		HTTPURL:        g.Project.HTTPURL,
 	}
 }

@@ -7,8 +7,8 @@ import (
 )
 
 type ServiceInterface interface {
-	ParseGithubWebhook(payload string) (*Webhook, error)
-	ParseGitlabWebhook(payload string) (*Webhook, error)
+	ParseGithubWebhook(payload []byte) (*Webhook, error)
+	ParseGitlabWebhook(payload []byte) (*Webhook, error)
 }
 
 type Service struct{}
@@ -17,8 +17,8 @@ func New() *Service {
 	return &Service{}
 }
 
-func (s *Service) ParseGithubWebhook(payload string) (*Webhook, error) {
-	if payload == "" {
+func (s *Service) ParseGithubWebhook(payload []byte) (*Webhook, error) {
+	if payload == nil {
 		return nil, errors.BadRequest("payload is missing")
 	}
 
@@ -28,8 +28,8 @@ func (s *Service) ParseGithubWebhook(payload string) (*Webhook, error) {
 	return gwh.MapToWebHook(), errors.WithStack(err)
 }
 
-func (s *Service) ParseGitlabWebhook(payload string) (*Webhook, error) {
-	if payload == "" {
+func (s *Service) ParseGitlabWebhook(payload []byte) (*Webhook, error) {
+	if payload == nil {
 		return nil, errors.BadRequest("payload is missing")
 	}
 

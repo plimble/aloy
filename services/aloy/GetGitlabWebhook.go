@@ -1,12 +1,16 @@
 package aloy
 
+import (
+	"github.com/plimble/aloy/services/testrunner"
+)
+
 type GetGitlabWebhookInput struct {
-	payload string
+	Payload []byte
 }
 
 func (uc *Usecase) GetGitlabWebhook(input *GetGitlabWebhookInput) error {
-	_, err := uc.webhook.ParseGitlabWebhook(input.payload)
-	uc.queue.EnQueue(nil)
+	wh, err := uc.webhook.ParseGitlabWebhook(input.Payload)
+	uc.testrunner.Enqueue(testrunner.Message(*wh))
 
 	return err
 }

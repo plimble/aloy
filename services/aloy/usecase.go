@@ -1,6 +1,8 @@
 package aloy
 
 type UsecaseInterface interface {
+	GetGithubWebhook(input *GetGithubWebhookInput) error
+	GetGitlabWebhook(input *GetGitlabWebhookInput) error
 }
 
 type Usecase struct {

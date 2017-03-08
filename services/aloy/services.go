@@ -2,14 +2,14 @@ package aloy
 
 import (
 	"github.com/plimble/aloy/services/config"
-	"github.com/plimble/aloy/services/queue"
+	"github.com/plimble/aloy/services/testrunner"
 	"github.com/plimble/aloy/services/webhook"
 )
 
 type Services struct {
-	config  *config.Config
-	webhook webhook.ServiceInterface
-	queue   queue.ServiceInterface
+	config     *config.Config
+	webhook    webhook.ServiceInterface
+	testrunner testrunner.ServiceInterface
 }
 
 func (s *Services) SetWebhook(service webhook.ServiceInterface) {
@@ -20,6 +20,6 @@ func (s *Services) SetConfig(service *config.Config) {
 	s.config = service
 }
 
-func (s *Services) SetQueue(service queue.ServiceInterface) {
-	s.queue = service
+func (s *Services) SetTestRunner(service testrunner.ServiceInterface) {
+	s.testrunner = service
 }

@@ -10,6 +10,7 @@ type GithubRepositoryWebhookResult struct {
 	FullName    string `json:"full_name"`
 	Description string `json:"description"`
 	URL         string `json:"url"`
+	CloneURL    string `json:"clone_url"`
 }
 
 type GithubWebHookResult struct {
@@ -28,5 +29,6 @@ func (g *GithubWebHookResult) MapToWebHook() *Webhook {
 		RepoName:       g.Repository.FullName,
 		RepoHomepage:   g.Repository.URL,
 		RepoDesciption: g.Repository.Description,
+		HTTPURL:        g.Repository.CloneURL,
 	}
 }

@@ -14,7 +14,7 @@ func New() *iris.Framework {
 
 	srv.Use(recover.New())
 
-	restful(srv, uc)
+	restfulroute(srv, uc)
 
 	return srv
 }

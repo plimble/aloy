@@ -20,7 +20,7 @@ func (t *WebhookServiceSuite) SetupTest() {
 }
 
 func (t *WebhookServiceSuite) TestParseGithubWebhook() {
-	payload := `
+	payload := []byte(`
 	{
 		"ref": "refs/heads/changes",
 		"before": "9049f1265b7d61be4a8904a9a27120d2064dab3b",
@@ -184,7 +184,7 @@ func (t *WebhookServiceSuite) TestParseGithubWebhook() {
 			"site_admin": false
 		}
 	}
-	`
+	`)
 	expWebhook := &Webhook{
 		SenderName:     "baxterthehacker",
 		SenderAvatar:   "https://avatars.githubusercontent.com/u/6752317?v=3",
@@ -193,6 +193,7 @@ func (t *WebhookServiceSuite) TestParseGithubWebhook() {
 		RepoName:       "baxterthehacker/public-repo",
 		RepoHomepage:   "https://github.com/baxterthehacker/public-repo",
 		RepoDesciption: "desc",
+		HTTPURL:        "https://github.com/baxterthehacker/public-repo.git",
 	}
 
 	webhook, err := t.service.ParseGithubWebhook(payload)
@@ -201,7 +202,7 @@ func (t *WebhookServiceSuite) TestParseGithubWebhook() {
 }
 
 func (t *WebhookServiceSuite) TestParseGitlabWebhook() {
-	payload := `
+	payload := []byte(`
 	{
 		"object_kind": "push",
 		"before": "95790bf891e76fee5e1747ab589903a6a1f80f22",
@@ -268,7 +269,7 @@ func (t *WebhookServiceSuite) TestParseGitlabWebhook() {
 		],
 		"total_commits_count": 4
 	}
-	`
+	`)
 	expWebhook := &Webhook{
 		SenderName:     "John Smith",
 		SenderAvatar:   "https://s.gravatar.com/avatar/d4c74594d841139328695756648b6bd6?s=8://s.gravatar.com/avatar/d4c74594d841139328695756648b6bd6?s=80",
@@ -277,6 +278,7 @@ func (t *WebhookServiceSuite) TestParseGitlabWebhook() {
 		RepoName:       "mike/diaspora",
 		RepoHomepage:   "http://example.com/mike/diaspora",
 		RepoDesciption: "desc",
+		HTTPURL:        "http://example.com/mike/diaspora.git",
 	}
 
 	webhook, err := t.service.ParseGitlabWebhook(payload)
