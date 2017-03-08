@@ -43,6 +43,8 @@ func (t *StoreSuite) TestCreateAndGetRepository() {
 	repository := &entity.Repository{
 		Id:          "1",
 		Name:        "repo_test",
+		OwnerName:   "owner_test",
+		Source:      "github",
 		Description: "repo_description",
 		HomePage:    "http://test.com",
 		CreatedAt:   time.Now().Truncate(time.Second).Format(time.RFC3339),
@@ -51,5 +53,7 @@ func (t *StoreSuite) TestCreateAndGetRepository() {
 	err := t.store.CreateRepository(repository)
 	t.NoError(err)
 
-	t.store.GetRepositoryByName("repo_test")
+	resRepository, err := t.store.GetRepository("repo_test", "owner_test", "github")
+	t.NoError(err)
+	t.Equal(repository, resRepository)
 }
