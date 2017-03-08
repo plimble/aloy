@@ -10,6 +10,8 @@ type CreateCommitReq struct {
 	SenderAvatar          string
 	Commit                string
 	Ref                   string
+	RepositoryOwner       string
+	RepositorySource      string
 	RepositoryName        string
 	RepositoryURL         string
 	RepositoryDescription string
@@ -19,7 +21,7 @@ type CreateCommitRes struct {
 }
 
 func (cs *CoverageService) CreateCommit(req *CreateCommitReq) (*CreateCommitRes, error) {
-	repo, err := cs.store.GetRepositoryByName(req.RepositoryName)
+	repo, err := cs.store.GetRepository(req.RepositoryName, req.RepositoryOwner, req.RepositorySource)
 
 	if err != nil && !errors.IsNotFound(err) {
 		return nil, err
@@ -27,7 +29,7 @@ func (cs *CoverageService) CreateCommit(req *CreateCommitReq) (*CreateCommitRes,
 
 	if err != nil && errors.IsNotFound(err) {
 		repoId := cs.idgen.Generate()
-		repo = entity.NewRepository(repoId, req.RepositoryName, req.RepositoryDescription, req.RepositoryURL)
+		repo = entity.NewRepository(repoId, req.RepositoryName, req.RepositoryOwner, req.RepositorySource, req.RepositoryDescription, req.RepositoryURL)
 		if err := cs.store.CreateRepository(repo); err != nil {
 			return nil, err
 		}

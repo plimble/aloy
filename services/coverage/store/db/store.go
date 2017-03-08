@@ -24,6 +24,8 @@ func (s *Store) CreateRepositorysTable() {
 	s.db.Exec(`CREATE TABLE repositorys (
 		id varchar(30) NOT NULL,
 		name varchar(30) NOT NULL,
+		owner_name varchar(30) NOT NULL,
+		source varchar(30) NOT NULL,
 		homepage text,
 		description text,
 		created_at timestamp without time zone,
@@ -46,7 +48,7 @@ func (s *Store) CreateCommitsTable() {
 }
 
 func (s *Store) CreateRepository(repository *entity.Repository) error {
-	_, err := s.db.Exec(`INSERT INTO repositorys(id, name, homepage, description, created_at) VALUES(?, ?, ?, ?, ?)`, repository.Id, repository.Name, repository.HomePage, repository.Description, repository.CreatedAt)
+	_, err := s.db.Exec(`INSERT INTO repositorys(id, name, owner_name, soruce, homepage, description, created_at) VALUES(?, ?, ?, ?, ?, ?, ?)`, repository.Id, repository.Name, repository.OwnerName, repository.Source, repository.HomePage, repository.Description, repository.CreatedAt)
 
 	if err != nil {
 		return errors.WithStack(err)

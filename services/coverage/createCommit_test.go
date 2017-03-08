@@ -35,6 +35,8 @@ func (t *CreateCommitSuite) TestCreateCommit() {
 	repository := &entity.Repository{
 		Id:          "1",
 		Name:        "repo_test",
+		OwnerName:   "master_john",
+		Source:      "github",
 		Description: "repo_description",
 		HomePage:    "http://test.com",
 		CreatedAt:   time.Now().Truncate(time.Second).Format(time.RFC3339),
@@ -52,6 +54,8 @@ func (t *CreateCommitSuite) TestCreateCommit() {
 	req := &CreateCommitReq{
 		Commit:                "c_1",
 		Ref:                   "develop",
+		RepositoryOwner:       "master_john",
+		RepositorySource:      "github",
 		RepositoryName:        "repo_test",
 		RepositoryDescription: "repo_description",
 		RepositoryURL:         "http://test.com",
@@ -62,7 +66,7 @@ func (t *CreateCommitSuite) TestCreateCommit() {
 		Commit: commit,
 	}
 
-	t.store.On("GetRepositoryByName", "repo_test").Once().Return(repository, nil)
+	t.store.On("GetRepository", "repo_test", "master_john", "github").Once().Return(repository, nil)
 	t.store.On("CreateCommit", commit).Once().Return(nil)
 
 	res, err := t.service.CreateCommit(req)
@@ -76,6 +80,8 @@ func (t *CreateCommitSuite) TestCreateCommitWithNewRepository() {
 	repository := &entity.Repository{
 		Id:          "1",
 		Name:        "repo_test",
+		OwnerName:   "master_john",
+		Source:      "github",
 		Description: "repo_description",
 		HomePage:    "http://test.com",
 		CreatedAt:   time.Now().Truncate(time.Second).Format(time.RFC3339),
@@ -93,6 +99,8 @@ func (t *CreateCommitSuite) TestCreateCommitWithNewRepository() {
 	req := &CreateCommitReq{
 		Commit:                "c_1",
 		Ref:                   "develop",
+		RepositoryOwner:       "master_john",
+		RepositorySource:      "github",
 		RepositoryName:        "repo_test",
 		RepositoryDescription: "repo_description",
 		RepositoryURL:         "http://test.com",
@@ -103,7 +111,7 @@ func (t *CreateCommitSuite) TestCreateCommitWithNewRepository() {
 		Commit: commit,
 	}
 
-	t.store.On("GetRepositoryByName", "repo_test").Once().Return(nil, errors.NotFound("test not found"))
+	t.store.On("GetRepository", "repo_test", "master_john", "github").Once().Return(nil, errors.NotFound("test not found"))
 	t.idgen.On("Generate").Once().Return("1")
 	t.store.On("CreateRepository", repository).Once().Return(nil)
 	t.store.On("CreateCommit", commit).Once().Return(nil)

@@ -158,13 +158,13 @@ func (_m *Store) GetAllRepositorys(limit int, offset int) ([]*entity.Repository,
 	return r0, r1
 }
 
-// GetRepositoryByName provides a mock function with given fields: repositoryName
-func (_m *Store) GetRepositoryByName(repositoryName string) (*entity.Repository, error) {
-	ret := _m.Called(repositoryName)
+// GetRepository provides a mock function with given fields: repositoryName, repositoryOwnerName, repositorySource
+func (_m *Store) GetRepository(repositoryName string, repositoryOwnerName string, repositorySource string) (*entity.Repository, error) {
+	ret := _m.Called(repositoryName, repositoryOwnerName, repositorySource)
 
 	var r0 *entity.Repository
-	if rf, ok := ret.Get(0).(func(string) *entity.Repository); ok {
-		r0 = rf(repositoryName)
+	if rf, ok := ret.Get(0).(func(string, string, string) *entity.Repository); ok {
+		r0 = rf(repositoryName, repositoryOwnerName, repositorySource)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*entity.Repository)
@@ -172,8 +172,8 @@ func (_m *Store) GetRepositoryByName(repositoryName string) (*entity.Repository,
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(string) error); ok {
-		r1 = rf(repositoryName)
+	if rf, ok := ret.Get(1).(func(string, string, string) error); ok {
+		r1 = rf(repositoryName, repositoryOwnerName, repositorySource)
 	} else {
 		r1 = ret.Error(1)
 	}

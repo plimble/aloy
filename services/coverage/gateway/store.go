@@ -12,7 +12,7 @@ type Store interface {
 	DeleteRepositoryAndCommits(repositoryId string) error
 	DeleteCommit(commitId string) error
 
-	GetRepositoryByName(repositoryName string) (*entity.Repository, error)
+	GetRepository(repositoryName, repositoryOwnerName, repositorySource string) (*entity.Repository, error)
 	GetAllRepositorys(limit, offset int) ([]*entity.Repository, error)
 	GetAllCommitsByRepository(repositoryId string, limit, offset int) ([]*entity.Commit, error)
 	GetAllCommitsByName(name string, limit, offset int) ([]*entity.Commit, error)

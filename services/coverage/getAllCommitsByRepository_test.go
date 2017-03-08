@@ -50,24 +50,15 @@ func (t *GetAllCommitsByRepositorySuite) TestGetAllCommitsByRepository() {
 		},
 	}
 
-	repo := &entity.Repository{
-		Id:          "1",
-		Name:        "repo_test",
-		Description: "repo_description",
-		HomePage:    "http://test.com",
-		CreatedAt:   time.Now().Truncate(time.Second).Format(time.RFC3339),
-	}
-
 	req := &GetAllCommitsByRepositoryReq{
-		RepositoryName: "repo_test",
-		Limit:          5,
-		Offset:         0,
+		RepositoryId: "1",
+		Limit:        5,
+		Offset:       0,
 	}
 	expRes := &GetAllCommitsByRepositoryRes{
 		Commits: commits,
 	}
 
-	t.store.On("GetRepositoryByName", "repo_test").Once().Return(repo, nil)
 	t.store.On("GetAllCommitsByRepository", "1", 5, 0).Once().Return(commits, nil)
 
 	res, err := t.service.GetAllCommitsByRepository(req)
