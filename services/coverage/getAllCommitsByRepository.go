@@ -14,7 +14,12 @@ type GetAllCommitsByRepositoryRes struct {
 }
 
 func (cs *CoverageService) GetAllCommitsByRepository(req *GetAllCommitsByRepositoryReq) (*GetAllCommitsByRepositoryRes, error) {
-	commits, err := cs.store.GetAllCommitsByRepository(req.RepositoryName, req.Limit, req.Offset)
+	repo, err := cs.store.GetRepositoryByName(req.RepositoryName)
+	if err != nil {
+		return nil, err
+	}
+
+	commits, err := cs.store.GetAllCommitsByRepository(repo.Id, req.Limit, req.Offset)
 	if err != nil {
 		return nil, err
 	}

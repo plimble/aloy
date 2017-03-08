@@ -4,7 +4,7 @@ import (
 	"github.com/plimble/aloy/services/coverage/entity"
 )
 
-//go:generate mockery -name CoverageStore -case underscore -outpkg mock -output ../store/mock
+//go:generate mockery -name Store -case underscore -outpkg mock -output ../store/mock
 type Store interface {
 	CreateRepository(repository *entity.Repository) error
 	CreateCommit(commit *entity.Commit) error

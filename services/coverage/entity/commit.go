@@ -5,7 +5,7 @@ import (
 )
 
 type Commit struct {
-	CommitId     string
+	Id           string
 	RepositoryId string
 	Ref          string
 
@@ -17,7 +17,7 @@ type Commit struct {
 
 func NewCommit(commitId, repositoryId, ref, senderName, senderAvatar string) *Commit {
 	return &Commit{
-		CommitId:     commitId,
+		Id:           commitId,
 		RepositoryId: repositoryId,
 		Ref:          ref,
 		SenderName:   senderName,

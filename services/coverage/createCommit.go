@@ -6,13 +6,13 @@ import (
 )
 
 type CreateCommitReq struct {
-	SenderName           string
-	SenderAvatar         string
-	Commit               string
-	Ref                  string
-	RepositoryName       string
-	RepositoryURL        string
-	RepositoryDesciption string
+	SenderName            string
+	SenderAvatar          string
+	Commit                string
+	Ref                   string
+	RepositoryName        string
+	RepositoryURL         string
+	RepositoryDescription string
 }
 type CreateCommitRes struct {
 	*entity.Commit
@@ -27,7 +27,7 @@ func (cs *CoverageService) CreateCommit(req *CreateCommitReq) (*CreateCommitRes,
 
 	if err != nil && errors.IsNotFound(err) {
 		repoId := cs.idgen.Generate()
-		repo = entity.NewRepository(repoId, req.RepositoryName, req.RepositoryDesciption, req.RepositoryURL)
+		repo = entity.NewRepository(repoId, req.RepositoryName, req.RepositoryDescription, req.RepositoryURL)
 		if err := cs.store.CreateRepository(repo); err != nil {
 			return nil, err
 		}
@@ -38,5 +38,5 @@ func (cs *CoverageService) CreateCommit(req *CreateCommitReq) (*CreateCommitRes,
 		return nil, err
 	}
 
-	return commit, nil
+	return &CreateCommitRes{commit}, nil
 }
