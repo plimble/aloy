@@ -14,5 +14,7 @@ func New(services *Services) *Usecase {
 		Services: services,
 	}
 
+	uc.testrunner.SetWaitResult(uc.SaveTestResult)
+
 	return uc
 }

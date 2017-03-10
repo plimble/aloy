@@ -1,5 +1,7 @@
 package testrunner
 
+import "fmt"
+
 type Message struct {
 	Provider       string
 	SenderName     string
@@ -22,6 +24,7 @@ type ResultFunc func(result Result)
 
 type ServiceInterface interface {
 	Enqueue(msg Message)
+	SetWaitResult(resultFunc ResultFunc)
 }
 
 type ServiceOptions struct {
@@ -64,8 +67,8 @@ func New(opt ServiceOptions) *Service {
 	s.result = make(chan Result, s.opt.MaxRunner)
 
 	for i := 0; i < s.opt.MaxRunner; i++ {
-		runner := newRunner(s.channel, s.result, s.opt)
-		runner.start()
+		s.startRunner()
+		s.waitResult()
 	}
 
 	go s.dispatch()
@@ -75,6 +78,35 @@ func New(opt ServiceOptions) *Service {
 
 func (s *Service) Enqueue(msg Message) {
 	s.q <- msg
+}
+
+func (s *Service) SetWaitResult(resultFunc ResultFunc) {
+	s.opt.ResultFunc = resultFunc
+}
+
+func (s *Service) waitResult() {
+	go func() {
+		for {
+			select {
+			case result := <-s.result:
+				if s.opt.ResultFunc != nil {
+					s.opt.ResultFunc(result)
+				}
+			}
+		}
+	}()
+}
+
+func (s *Service) startRunner() {
+	go func() {
+		for {
+			select {
+			case msg := <-s.channel:
+				fmt.Println("start runner", msg)
+				s.opt.RunnerFunc(msg, s.result, s.opt)
+			}
+		}
+	}()
 }
 
 func (s *Service) dispatch() {
