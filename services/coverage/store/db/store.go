@@ -2,6 +2,7 @@ package db
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/plimble/aloy/services/coverage/entity"
 	"github.com/plimble/errors"
@@ -21,34 +22,35 @@ func NewStore(db *sql.DB) *Store {
 }
 
 func (s *Store) CreateRepositorysTable() {
-	s.db.Exec(`CREATE TABLE repositorys (
-		id varchar(30) NOT NULL,
+	_, err := s.db.Exec(`CREATE TABLE repositorys (
+		id varchar(30) NOT NULL PRIMARY KEY,
 		name varchar(30) NOT NULL,
 		owner_name varchar(30) NOT NULL,
 		source varchar(30) NOT NULL,
 		homepage text,
 		description text,
-		created_at timestamp without time zone,
-		CONSTRAINT repositorys_id_pk PRIMARY KEY (id)
+		created_at varchar(50)
 	)`)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func (s *Store) CreateCommitsTable() {
 	s.db.Exec(`CREATE TABLE commits (
-		id varchar(30) NOT NULL,
+		id varchar(30) NOT NULL PRIMARY KEY,
 		repository_id varchar(30) NOT NULL,
 		ref varchar(30) NOT NULL,
 		sender_name varchar(30) NOT NULL,
 		sender_avatar varchar(200),
-		created_at timestamp without time zone,
-		CONSTRAINT commits_id_pk PRIMARY KEY (id)
+		created_at varchar(50)
 	)`)
 
-	s.db.Exec("CREATE INDEX commits_repositoryId_idx ON commits (repository_id)")
+	// s.db.Exec("CREATE INDEX commits_repositoryId_idx ON commits (repository_id)")
 }
 
 func (s *Store) CreateRepository(repository *entity.Repository) error {
-	_, err := s.db.Exec(`INSERT INTO repositorys(id, name, owner_name, soruce, homepage, description, created_at) VALUES(?, ?, ?, ?, ?, ?, ?)`, repository.Id, repository.Name, repository.OwnerName, repository.Source, repository.HomePage, repository.Description, repository.CreatedAt)
+	_, err := s.db.Exec(`INSERT INTO repositorys(id, name, owner_name, source, homepage, description, created_at) VALUES(?, ?, ?, ?, ?, ?, ?)`, repository.Id, repository.Name, repository.OwnerName, repository.Source, repository.HomePage, repository.Description, repository.CreatedAt)
 
 	if err != nil {
 		return errors.WithStack(err)
@@ -103,8 +105,9 @@ func (s *Store) DeleteCommit(commitId string) error {
 }
 
 func (s *Store) GetRepository(repositoryName, repositoryOwnerName, repositorySource string) (*entity.Repository, error) {
-	var repository *entity.Repository
-	err := s.db.QueryRow("SELECT * FROM repositorys WHERE name=? AND owner_name=? AND source=?", repositoryName, repositoryOwnerName, repositorySource).Scan(&repository)
+	repository := &entity.Repository{}
+	rows, err := s.db.Query("SELECT * FROM repositorys WHERE name=? AND owner_name=? AND source=?", repositoryName, repositoryOwnerName, repositorySource)
+	defer rows.Close()
 
 	if err == sql.ErrNoRows {
 		return nil, errors.NotFound(err.Error())
@@ -114,12 +117,19 @@ func (s *Store) GetRepository(repositoryName, repositoryOwnerName, repositorySou
 		return nil, errors.WithStack(err)
 	}
 
+	for rows.Next() {
+		if err := rows.Scan(&repository.Id, &repository.Name, &repository.OwnerName, &repository.Source, &repository.HomePage, &repository.Description, &repository.CreatedAt); err != nil {
+			return nil, errors.WithStack(err)
+		}
+	}
+
 	return repository, nil
 }
 
 func (s *Store) GetAllRepositorys(limit, offset int) ([]*entity.Repository, error) {
-	var repositorys []*entity.Repository
-	rows, err := s.db.Query("SELECT * FROM repositorys LIMIT ? OFFSET ? ORDER BY created_at DESC", limit, offset)
+	repositorys := []*entity.Repository{}
+
+	rows, err := s.db.Query("SELECT * FROM repositorys ORDER BY created_at DESC LIMIT ? OFFSET ?", limit, offset)
 	defer rows.Close()
 
 	if err != nil && err != sql.ErrNoRows {
@@ -127,8 +137,9 @@ func (s *Store) GetAllRepositorys(limit, offset int) ([]*entity.Repository, erro
 	}
 
 	for rows.Next() {
-		var repository *entity.Repository
-		if err := rows.Scan(&repository); err != nil {
+		repository := &entity.Repository{}
+
+		if err := rows.Scan(&repository.Id, &repository.Name, &repository.OwnerName, &repository.Source, &repository.HomePage, &repository.Description, &repository.CreatedAt); err != nil {
 			return nil, errors.WithStack(err)
 		}
 
@@ -140,17 +151,19 @@ func (s *Store) GetAllRepositorys(limit, offset int) ([]*entity.Repository, erro
 }
 
 func (s *Store) GetAllCommitsByRepository(repositoryId string, limit, offset int) ([]*entity.Commit, error) {
-	var commits []*entity.Commit
-	rows, err := s.db.Query("SELECT * FROM commits WHERE repository_id=? LIMIT ? OFFSET ? ORDER BY created_at DESC", repositoryId, limit, offset)
+	commits := []*entity.Commit{}
+	rows, err := s.db.Query("SELECT * FROM commits WHERE repository_id=? ORDER BY created_at DESC  LIMIT ? OFFSET ?", repositoryId, limit, offset)
 	defer rows.Close()
 
 	if err != nil && err != sql.ErrNoRows {
+		fmt.Println(err)
 		return nil, errors.WithStack(err)
 	}
 
 	for rows.Next() {
-		var commit *entity.Commit
-		if err := rows.Scan(&commit); err != nil {
+		commit := &entity.Commit{}
+
+		if err := rows.Scan(&commit.Id, &commit.RepositoryId, &commit.Ref, &commit.SenderName, &commit.SenderAvatar, &commit.CreatedAt); err != nil {
 			return nil, errors.WithStack(err)
 		}
 
@@ -161,8 +174,8 @@ func (s *Store) GetAllCommitsByRepository(repositoryId string, limit, offset int
 }
 
 func (s *Store) GetAllCommitsByName(name string, limit, offset int) ([]*entity.Commit, error) {
-	var commits []*entity.Commit
-	rows, err := s.db.Query("SELECT * FROM commits WHERE sender_name=? LIMIT ? OFFSET ? ORDER BY created_at DESC", name, limit, offset)
+	commits := []*entity.Commit{}
+	rows, err := s.db.Query("SELECT * FROM commits WHERE sender_name=? ORDER BY created_at DESC  LIMIT ? OFFSET ?", name, limit, offset)
 	defer rows.Close()
 
 	if err != nil && err != sql.ErrNoRows {
@@ -170,8 +183,8 @@ func (s *Store) GetAllCommitsByName(name string, limit, offset int) ([]*entity.C
 	}
 
 	for rows.Next() {
-		var commit *entity.Commit
-		if err := rows.Scan(&commit); err != nil {
+		commit := &entity.Commit{}
+		if err := rows.Scan(&commit.Id, &commit.RepositoryId, &commit.Ref, &commit.SenderName, &commit.SenderAvatar, &commit.CreatedAt); err != nil {
 			return nil, errors.WithStack(err)
 		}
 
@@ -182,8 +195,8 @@ func (s *Store) GetAllCommitsByName(name string, limit, offset int) ([]*entity.C
 }
 
 func (s *Store) GetAllCommitsByRepositoryAndRef(repositoryId, ref string, limit, offset int) ([]*entity.Commit, error) {
-	var commits []*entity.Commit
-	rows, err := s.db.Query("SELECT * FROM commits WHERE repository_id=? AND ref=? LIMIT ? OFFSET ? ORDER BY created_at DESC", repositoryId, ref, limit, offset)
+	commits := []*entity.Commit{}
+	rows, err := s.db.Query("SELECT * FROM commits WHERE repository_id=? AND ref=? ORDER BY created_at DESC LIMIT ? OFFSET ?", repositoryId, ref, limit, offset)
 	defer rows.Close()
 
 	if err != nil && err != sql.ErrNoRows {
@@ -191,8 +204,8 @@ func (s *Store) GetAllCommitsByRepositoryAndRef(repositoryId, ref string, limit,
 	}
 
 	for rows.Next() {
-		var commit *entity.Commit
-		if err := rows.Scan(&commit); err != nil {
+		commit := &entity.Commit{}
+		if err := rows.Scan(&commit.Id, &commit.RepositoryId, &commit.Ref, &commit.SenderName, &commit.SenderAvatar, &commit.CreatedAt); err != nil {
 			return nil, errors.WithStack(err)
 		}
 

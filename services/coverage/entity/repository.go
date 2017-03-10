@@ -9,8 +9,8 @@ type Repository struct {
 	Name        string
 	OwnerName   string
 	Source      string
-	Description string
 	HomePage    string
+	Description string
 	CreatedAt   string
 }
 
