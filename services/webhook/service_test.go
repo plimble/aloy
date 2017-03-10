@@ -186,6 +186,7 @@ func (t *WebhookServiceSuite) TestParseGithubWebhook() {
 	}
 	`)
 	expWebhook := &Webhook{
+		Provider:       "github",
 		SenderName:     "baxterthehacker",
 		SenderAvatar:   "https://avatars.githubusercontent.com/u/6752317?v=3",
 		Commit:         "0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c",
@@ -271,6 +272,7 @@ func (t *WebhookServiceSuite) TestParseGitlabWebhook() {
 	}
 	`)
 	expWebhook := &Webhook{
+		Provider:       "gitlab",
 		SenderName:     "John Smith",
 		SenderAvatar:   "https://s.gravatar.com/avatar/d4c74594d841139328695756648b6bd6?s=8://s.gravatar.com/avatar/d4c74594d841139328695756648b6bd6?s=80",
 		Commit:         "da1560886d4f094c3e6c9ef40349f7d38b5d27d7",

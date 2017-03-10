@@ -18,6 +18,7 @@ type GitlabWebhookResult struct {
 
 func (g *GitlabWebhookResult) MapToWebHook() *Webhook {
 	return &Webhook{
+		Provider:       "gitlab",
 		SenderName:     g.UserName,
 		SenderAvatar:   g.UserAvatar,
 		Commit:         g.After,

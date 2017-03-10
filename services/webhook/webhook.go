@@ -1,6 +1,7 @@
 package webhook
 
 type Webhook struct {
+	Provider       string
 	SenderName     string
 	SenderAvatar   string
 	Commit         string

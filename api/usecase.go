@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/plimble/aloy/services/aloy"
+	"github.com/plimble/aloy/services/badge"
 	"github.com/plimble/aloy/services/config"
 	"github.com/plimble/aloy/services/testrunner"
 	"github.com/plimble/aloy/services/webhook"
@@ -20,6 +21,7 @@ func NewUsecase(cfg *config.Config) aloy.UsecaseInterface {
 		GitlabUsername: cfg.GitlabUsername,
 		GitLabPassword: cfg.GitlabPassword,
 	}))
+	s.SetBadge(badge.New())
 
 	return aloy.New(s)
 }

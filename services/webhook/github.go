@@ -22,6 +22,7 @@ type GithubWebHookResult struct {
 
 func (g *GithubWebHookResult) MapToWebHook() *Webhook {
 	return &Webhook{
+		Provider:       "github",
 		SenderName:     g.Sender.Login,
 		SenderAvatar:   g.Sender.AvatarURL,
 		Commit:         g.After,

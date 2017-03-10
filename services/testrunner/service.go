@@ -1,6 +1,7 @@
 package testrunner
 
 type Message struct {
+	Provider       string
 	SenderName     string
 	SenderAvatar   string
 	Commit         string
@@ -11,7 +12,13 @@ type Message struct {
 	HTTPURL        string
 }
 
-type RunnerFunc func(msg Message, opt ServiceOptions)
+type Result struct {
+	Cov  float64
+	HTML string
+}
+
+type RunnerFunc func(msg Message, result chan Result, opt ServiceOptions)
+type ResultFunc func(result Result)
 
 type ServiceInterface interface {
 	Enqueue(msg Message)
@@ -25,13 +32,14 @@ type ServiceOptions struct {
 	GithubUsername string
 	GithubPassword string
 	RunnerFunc     RunnerFunc
+	ResultFunc     ResultFunc
 }
 
 type Service struct {
-	q          chan Message
-	channel    chan Message
-	runnerFunc RunnerFunc
-	opt        ServiceOptions
+	q       chan Message
+	channel chan Message
+	result  chan Result
+	opt     ServiceOptions
 }
 
 func New(opt ServiceOptions) *Service {
@@ -48,14 +56,15 @@ func New(opt ServiceOptions) *Service {
 	}
 
 	if s.opt.RunnerFunc == nil {
-		s.opt.RunnerFunc = defaultRunnerFunc
+		s.opt.RunnerFunc = DefaultRunnerFunc
 	}
 
 	s.q = make(chan Message, s.opt.MaxQueue)
 	s.channel = make(chan Message, s.opt.MaxRunner)
+	s.result = make(chan Result, s.opt.MaxRunner)
 
 	for i := 0; i < s.opt.MaxRunner; i++ {
-		runner := newRunner(s.channel, s.opt)
+		runner := newRunner(s.channel, s.result, s.opt)
 		runner.start()
 	}
 
