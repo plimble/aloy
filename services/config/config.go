@@ -8,7 +8,7 @@ var (
 
 type Config struct {
 	Addr           string `default:":4400" required:"true"`
-	TestTags       []string
+	GoTestTags     string
 	GithubUsername string
 	GithubPassword string
 	GitlabUsername string

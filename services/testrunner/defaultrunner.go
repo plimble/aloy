@@ -25,7 +25,7 @@ func DefaultRunnerFunc(msg Message, result chan Result, opt ServiceOptions) {
 		Status: PENDING,
 	}
 
-	out, err := exec.Command("docker", "run", "--rm", "-a", "stdout", "-a", "stderr", msg.Provider, msg.RepoName, usr, pwd).CombinedOutput()
+	out, err := exec.Command("docker", "run", "--rm", "-a", "stdout", "-a", "stderr", msg.Provider, msg.RepoName, usr, pwd, opt.GoTestTags).CombinedOutput()
 	if err != nil {
 		result <- Result{
 			Status: FAILED,

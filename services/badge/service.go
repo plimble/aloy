@@ -3,7 +3,7 @@ package badge
 import "fmt"
 
 type ServiceInterface interface {
-	Badge(num float64) string
+	Badge(num float64, status int) string
 }
 
 type Service struct{}

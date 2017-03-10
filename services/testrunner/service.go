@@ -44,6 +44,7 @@ type ServiceOptions struct {
 	GithubPassword string
 	RunnerFunc     RunnerFunc
 	ResultFunc     ResultFunc
+	GoTestTags     string
 }
 
 type Service struct {

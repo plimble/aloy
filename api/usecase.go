@@ -20,6 +20,7 @@ func NewUsecase(cfg *config.Config) aloy.UsecaseInterface {
 		GithubPassword: cfg.GithubPassword,
 		GitlabUsername: cfg.GitlabUsername,
 		GitLabPassword: cfg.GitlabPassword,
+		TestTags:       cfg.TestTags,
 	}))
 	s.SetBadge(badge.New())
 
