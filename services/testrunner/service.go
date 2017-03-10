@@ -14,9 +14,17 @@ type Message struct {
 	HTTPURL        string
 }
 
+const (
+	PENDING = iota
+	SUCCESS
+	FAILED
+	UNKNOWN
+)
+
 type Result struct {
-	Cov  float64
-	HTML string
+	Status int
+	Cov    float64
+	HTML   string
 }
 
 type RunnerFunc func(msg Message, result chan Result, opt ServiceOptions)
