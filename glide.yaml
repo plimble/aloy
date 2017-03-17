@@ -1,12 +1,13 @@
 package: github.com/plimble/aloy
 import:
-  - package: github.com/plimble/envconfig
-  - package: github.com/plimble/validator
-  - package: github.com/plimble/errors
-  - package: github.com/stretchr/testify
-    subpackages:
-    - mock
-  - package: gopkg.in/kataras/iris.v6
-    subpackages:
-    - adaptors/httprouter
-    - middleware/recover
+- package: github.com/plimble/validator
+- package: github.com/plimble/errors
+- package: github.com/stretchr/testify
+  subpackages:
+  - mock
+- package: gopkg.in/kataras/iris.v6
+  subpackages:
+  - adaptors/httprouter
+  - middleware/recover
+- package: github.com/plimble/goconfig
+  version: ^1.0.1
