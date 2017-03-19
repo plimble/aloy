@@ -3,7 +3,7 @@ package restful
 import (
 	"io/ioutil"
 
-	"github.com/plimble/aloy/services/aloy"
+	"github.com/plimble/aloy/aloy"
 	"github.com/plimble/errors"
 	"gopkg.in/kataras/iris.v6"
 )

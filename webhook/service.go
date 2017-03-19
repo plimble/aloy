@@ -26,7 +26,7 @@ func (s *service) ParseGithubWebhook(payload []byte) (*Webhook, error) {
 	gwh := &GithubWebHookResult{}
 	err := json.Unmarshal([]byte(payload), gwh)
 
-	return gwh.MapToWebHook(), errors.WithStack(err)
+	return gwh.mapToWebHook(), errors.WithStack(err)
 }
 
 func (s *service) ParseGitlabWebhook(payload []byte) (*Webhook, error) {
@@ -37,5 +37,5 @@ func (s *service) ParseGitlabWebhook(payload []byte) (*Webhook, error) {
 	gwh := &GitlabWebhookResult{}
 	err := json.Unmarshal([]byte(payload), gwh)
 
-	return gwh.MapToWebHook(), errors.WithStack(err)
+	return gwh.mapToWebHook(), errors.WithStack(err)
 }

@@ -1,7 +1,9 @@
 package webhook
 
 import (
+	"fmt"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/suite"
 )
@@ -185,16 +187,21 @@ func (t *WebhookServiceSuite) TestParseGithubWebhook() {
 		}
 	}
 	`)
+
+	timestamp, _ := time.Parse(time.RFC3339, "2015-05-05T19:40:15-04:00")
+
 	expWebhook := &Webhook{
-		Provider:       "github",
-		SenderName:     "baxterthehacker",
-		SenderAvatar:   "https://avatars.githubusercontent.com/u/6752317?v=3",
-		Commit:         "0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c",
-		Ref:            "refs/heads/changes",
-		RepoName:       "baxterthehacker/public-repo",
-		RepoHomepage:   "https://github.com/baxterthehacker/public-repo",
-		RepoDesciption: "desc",
-		HTTPURL:        "https://github.com/baxterthehacker/public-repo.git",
+		Provider:        "github",
+		SenderName:      "baxterthehacker",
+		SenderAvatar:    "https://avatars.githubusercontent.com/u/6752317?v=3",
+		CommitID:        "0d1a26e67d8f5eaf1f6ba5c57fc3c7d91ac0fd1c",
+		CommitMessage:   "Update README.md",
+		CommitTimestamp: timestamp.Unix(),
+		Ref:             "refs/heads/changes",
+		RepoName:        "baxterthehacker/public-repo",
+		RepoHomepage:    "https://github.com/baxterthehacker/public-repo",
+		RepoDesciption:  "desc",
+		HTTPURL:         "https://github.com/baxterthehacker/public-repo.git",
 	}
 
 	webhook, err := t.service.ParseGithubWebhook(payload)
@@ -271,16 +278,22 @@ func (t *WebhookServiceSuite) TestParseGitlabWebhook() {
 		"total_commits_count": 4
 	}
 	`)
+
+	timestamp, _ := time.Parse(time.RFC3339, "2012-01-03T23:36:29+02:00")
+	fmt.Println(timestamp.Unix())
+
 	expWebhook := &Webhook{
-		Provider:       "gitlab",
-		SenderName:     "John Smith",
-		SenderAvatar:   "https://s.gravatar.com/avatar/d4c74594d841139328695756648b6bd6?s=8://s.gravatar.com/avatar/d4c74594d841139328695756648b6bd6?s=80",
-		Commit:         "da1560886d4f094c3e6c9ef40349f7d38b5d27d7",
-		Ref:            "refs/heads/master",
-		RepoName:       "mike/diaspora",
-		RepoHomepage:   "http://example.com/mike/diaspora",
-		RepoDesciption: "desc",
-		HTTPURL:        "http://example.com/mike/diaspora.git",
+		Provider:        "gitlab",
+		SenderName:      "John Smith",
+		SenderAvatar:    "https://s.gravatar.com/avatar/d4c74594d841139328695756648b6bd6?s=8://s.gravatar.com/avatar/d4c74594d841139328695756648b6bd6?s=80",
+		CommitID:        "da1560886d4f094c3e6c9ef40349f7d38b5d27d7",
+		CommitMessage:   "fixed readme",
+		CommitTimestamp: timestamp.Unix(),
+		Ref:             "refs/heads/master",
+		RepoName:        "mike/diaspora",
+		RepoHomepage:    "http://example.com/mike/diaspora",
+		RepoDesciption:  "desc",
+		HTTPURL:         "http://example.com/mike/diaspora.git",
 	}
 
 	webhook, err := t.service.ParseGitlabWebhook(payload)

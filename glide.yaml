@@ -11,3 +11,9 @@ import:
   - middleware/recover
 - package: github.com/plimble/goconfig
   version: ^1.0.1
+- package: github.com/syndtr/goleveldb
+  subpackages:
+  - leveldb
+- package: github.com/golang/snappy
+- package: github.com/xanzy/go-gitlab
+- package: github.com/google/go-github

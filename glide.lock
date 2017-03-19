@@ -1,0 +1,116 @@
+hash: 24bf1434d9bf5bdc490344909a0604ca28765e818506ddebfd2a842c1e2a8080
+updated: 2017-03-18T20:40:27.398292678+07:00
+imports:
+- name: github.com/BurntSushi/toml
+  version: e643e9ef00b049d75de26e61109c5ea01885cd21
+- name: github.com/geekypanda/httpcache
+  version: 76ba6c68462ae362cda7564c44492b95322b363a
+  subpackages:
+  - internal
+  - internal/fhttp
+  - internal/fhttp/rule
+  - internal/nethttp
+  - internal/nethttp/rule
+  - internal/server
+- name: github.com/golang/protobuf
+  version: c9c7427a2a70d2eb3bafa0ab2dc163e45f143317
+  subpackages:
+  - proto
+- name: github.com/golang/snappy
+  version: 553a641470496b2327abcac10b36396bd98e45c9
+- name: github.com/google/go-github
+  version: 67f700645e97e82b8cf282ece3508805438be24f
+  subpackages:
+  - github
+- name: github.com/google/go-querystring
+  version: 53e6ce116135b80d037921a7fdd5138cf32d7a8a
+  subpackages:
+  - query
+- name: github.com/hashicorp/go-version
+  version: 03c5bf6be031b6dd45afec16b1cf94fc8938bc77
+- name: github.com/imdario/mergo
+  version: 50d4dbd4eb0e84778abe37cefef140271d96fade
+- name: github.com/iris-contrib/formBinder
+  version: 81b6a071e35797b83562caf4b3cad24dc01912dc
+- name: github.com/kataras/go-errors
+  version: 6fb46ef666f60ce19b5cc73906d531645d5bf8bc
+- name: github.com/klauspost/compress
+  version: 14c9a76e3c95e47f8ccce949bba2c1101a8b85e6
+  subpackages:
+  - flate
+  - gzip
+  - zlib
+- name: github.com/klauspost/cpuid
+  version: 09cded8978dc9e80714c4d85b0322337b0a1e5e0
+- name: github.com/klauspost/crc32
+  version: 1bab8b35b6bb565f92cbc97939610af9369f942a
+- name: github.com/microcosm-cc/bluemonday
+  version: e79763773ab6222ca1d5a7cbd9d62d83c1f77081
+- name: github.com/plimble/errors
+  version: 7305b41d387098ff68e1b661e21d53b9130a1bd1
+- name: github.com/plimble/goconfig
+  version: 822ae4a19c06fea317db806cd5bb201989dee7a0
+- name: github.com/plimble/validator
+  version: aab96f5c8c106b4bd2c4add9d81d39b22285f8fa
+- name: github.com/russross/blackfriday
+  version: 5f33e7b7878355cd2b7e6b8eefc48a5472c69f70
+- name: github.com/shurcooL/sanitized_anchor_name
+  version: 1dba4b3954bc059efc3991ec364f9f9a35f597d2
+- name: github.com/stretchr/testify
+  version: 4d4bfba8f1d1027c4fdbe371823030df51419987
+  subpackages:
+  - mock
+- name: github.com/syndtr/goleveldb
+  version: 3c5717caf1475fd25964109a0fc640bd150fce43
+  subpackages:
+  - leveldb
+  - leveldb/cache
+  - leveldb/comparer
+  - leveldb/errors
+  - leveldb/filter
+  - leveldb/iterator
+  - leveldb/journal
+  - leveldb/memdb
+  - leveldb/opt
+  - leveldb/storage
+  - leveldb/table
+  - leveldb/util
+- name: github.com/valyala/bytebufferpool
+  version: e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7
+- name: github.com/valyala/fasthttp
+  version: fc109d6887b5edb43510d924d14d735f3975fb51
+  subpackages:
+  - fasthttputil
+  - stackless
+- name: github.com/xanzy/go-gitlab
+  version: 442ae38dfd2f6a1e94d5f384bb6df1784395e732
+- name: golang.org/x/crypto
+  version: 459e26527287adbc2adcc5d0d49abff9a5f315a7
+  subpackages:
+  - acme
+  - acme/autocert
+- name: golang.org/x/net
+  version: a6577fac2d73be281a500b310739095313165611
+  subpackages:
+  - context
+  - context/ctxhttp
+  - html
+  - html/atom
+- name: google.golang.org/appengine
+  version: b79c28f0197795b4050bfcd7c4c2209136c594b1
+  subpackages:
+  - internal
+  - internal/app_identity
+  - internal/base
+  - internal/datastore
+  - internal/log
+  - internal/modules
+  - internal/remote_api
+- name: gopkg.in/kataras/iris.v6
+  version: 886124dbea1e87035f8a25fe3fd0e46015ae8c71
+  subpackages:
+  - adaptors/httprouter
+  - middleware/recover
+- name: gopkg.in/yaml.v2
+  version: a3f3340b5840cee44f372bddb5880fcbc419b46a
+testImports: []

@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/plimble/aloy/services/config"
+	"github.com/plimble/aloy/config"
 	"gopkg.in/kataras/iris.v6"
 	"gopkg.in/kataras/iris.v6/adaptors/httprouter"
 	"gopkg.in/kataras/iris.v6/middleware/recover"

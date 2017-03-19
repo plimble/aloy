@@ -1,6 +1,6 @@
-package webhook
+package testrunner
 
-type Webhook struct {
+type Message struct {
 	Provider        string
 	SenderName      string
 	SenderAvatar    string

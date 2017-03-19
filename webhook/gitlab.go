@@ -1,5 +1,7 @@
 package webhook
 
+import "time"
+
 type GitlabProjectWebhookResult struct {
 	Name              string `json:"name"`
 	Description       string `json:"description"`
@@ -8,24 +10,45 @@ type GitlabProjectWebhookResult struct {
 	HTTPURL           string `json:"http_url"`
 }
 
-type GitlabWebhookResult struct {
-	Ref        string                      `json:"ref"`
-	After      string                      `json:"after"`
-	UserName   string                      `json:"user_name"`
-	UserAvatar string                      `json:"user_avatar"`
-	Project    *GitlabProjectWebhookResult `json:"project"`
+type GitlabCommitsWebhookResult struct {
+	ID        string `json:"id"`
+	Message   string `json:"message"`
+	Timestamp string `json:"timestamp"`
 }
 
-func (g *GitlabWebhookResult) MapToWebHook() *Webhook {
+type GitlabWebhookResult struct {
+	Ref        string                        `json:"ref"`
+	After      string                        `json:"after"`
+	UserName   string                        `json:"user_name"`
+	UserAvatar string                        `json:"user_avatar"`
+	Project    *GitlabProjectWebhookResult   `json:"project"`
+	Commits    []*GitlabCommitsWebhookResult `json:"commits"`
+}
+
+func (g *GitlabWebhookResult) mapToWebHook() *Webhook {
+	var commitID, commitMessage, commitTimestamp string
+	for _, commit := range g.Commits {
+		if commit.ID == g.After {
+			commitID = commit.ID
+			commitMessage = commit.Message
+			commitTimestamp = commit.Timestamp
+		}
+	}
+
+	t, _ := time.Parse(time.RFC3339, commitTimestamp)
+	t.Unix()
+
 	return &Webhook{
-		Provider:       "gitlab",
-		SenderName:     g.UserName,
-		SenderAvatar:   g.UserAvatar,
-		Commit:         g.After,
-		Ref:            g.Ref,
-		RepoName:       g.Project.PathWithNamespace,
-		RepoHomepage:   g.Project.Homepage,
-		RepoDesciption: g.Project.Description,
-		HTTPURL:        g.Project.HTTPURL,
+		Provider:        "gitlab",
+		SenderName:      g.UserName,
+		SenderAvatar:    g.UserAvatar,
+		CommitID:        commitID,
+		CommitMessage:   commitMessage,
+		CommitTimestamp: t.Unix(),
+		Ref:             g.Ref,
+		RepoName:        g.Project.PathWithNamespace,
+		RepoHomepage:    g.Project.Homepage,
+		RepoDesciption:  g.Project.Description,
+		HTTPURL:         g.Project.HTTPURL,
 	}
 }

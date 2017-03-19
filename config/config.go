@@ -1,6 +1,6 @@
 package config
 
-import "github.com/plimble/envconfig"
+import "github.com/plimble/goconfig"
 
 var (
 	config *Config
@@ -19,7 +19,7 @@ type Config struct {
 
 func Get() *Config {
 	config := &Config{}
-	envconfig.Process("aloy", config)
+	goconfig.Process("aloy", config)
 
 	return config
 }

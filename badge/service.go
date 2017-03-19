@@ -2,17 +2,17 @@ package badge
 
 import "fmt"
 
-type ServiceInterface interface {
+type Service interface {
 	Badge(num float64, status int) string
 }
 
-type Service struct{}
+type service struct{}
 
-func New() *Service {
-	return &Service{}
+func NewService() *service {
+	return &service{}
 }
 
-func (s *Service) Badge(num float64, status int) string {
+func (s *service) Badge(num float64, status int) string {
 	switch status {
 	case 0:
 		return fmt.Sprintf("https://img.shields.io/badge/coverage-pending-lightgrey.svg?style=flat")

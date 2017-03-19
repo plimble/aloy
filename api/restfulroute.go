@@ -1,9 +1,9 @@
 package api
 
 import (
+	"github.com/plimble/aloy/aloy"
 	"github.com/plimble/aloy/api/mw"
 	"github.com/plimble/aloy/api/restful"
-	"github.com/plimble/aloy/services/aloy"
 	"gopkg.in/kataras/iris.v6"
 )
 
