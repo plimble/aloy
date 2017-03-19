@@ -32,12 +32,12 @@ func (t *RunnerServiceSuite) TestSettingOptions() {
 	t.Equal(10, t.service.opt.MaxQueue)
 	t.Equal(5, t.service.opt.MaxRunner)
 	t.Nil(t.service.opt.ResultFunc)
-	t.Nil(t.service.opt.RunnerFunc)
+	t.Nil(t.service.opt.RunFunc)
 }
 
 func (t *RunnerServiceSuite) TestRun() {
 	quite := make(chan bool)
-	t.service.SetRunnerFunc(func(msg Message, result chan Result, opt *Options) {
+	t.service.SetRunFunc(func(msg Message, result chan Result, opt *Options) {
 		result <- Result{
 			Message: msg,
 			Status:  PENDING,
@@ -62,7 +62,7 @@ func (t *RunnerServiceSuite) TestRun() {
 	})
 
 	t.service.Enqueue(Message{
-		Provider:        "",
+		Provider:        "github",
 		SenderName:      "",
 		SenderAvatar:    "",
 		CommitID:        "1",
