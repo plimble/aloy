@@ -1,9 +1,9 @@
 FROM golang:alpine
 
 RUN apk --update upgrade && \
-    apk add ca-certificates mysql && \
+    apk add git curl ca-certificates && \
     update-ca-certificates && \
     rm -rf /var/cache/apk/*
 
-COPY app /
-CMD ["/app"]
+COPY app .
+CMD ["./app"]

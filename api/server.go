@@ -1,20 +1,22 @@
 package api
 
 import (
+	"github.com/plimble/aloy/config"
 	"gopkg.in/kataras/iris.v6"
 	"gopkg.in/kataras/iris.v6/adaptors/httprouter"
 	"gopkg.in/kataras/iris.v6/middleware/recover"
 )
 
-func New() *iris.Framework {
-	uc := NewUsecase()
+func Run() {
+	cfg := config.Get()
+	uc := NewUsecase(cfg)
 	srv := iris.New()
 
 	srv.Adapt(httprouter.New())
 
 	srv.Use(recover.New())
 
-	restful(srv, uc)
+	restfulroute(srv, uc)
 
-	return srv
+	srv.Listen(cfg.Addr)
 }
