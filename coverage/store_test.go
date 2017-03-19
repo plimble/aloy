@@ -18,7 +18,8 @@ func TestLeveldbStoreSuite(t *testing.T) {
 
 func (t *LeveldbStoreSuite) SetupSuite() {
 	var err error
-	t.store, err = NewLeveldbStore("./db_test")
+	store, err := NewLeveldbStore("./db_test")
+	t.store = store.(*leveldbstore)
 	if err != nil {
 		t.Error(err)
 	}

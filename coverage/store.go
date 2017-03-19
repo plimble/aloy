@@ -12,6 +12,7 @@ import (
 	"github.com/syndtr/goleveldb/leveldb/util"
 )
 
+// Store interface
 type Store interface {
 	GetCoverateResult(repo, commitID string) (*CoverateResult, error)
 	GetCommits(repo, ref, last string, limit int) ([]*Commit, error)
@@ -23,7 +24,8 @@ type leveldbstore struct {
 	*leveldb.DB
 }
 
-func NewLeveldbStore(path string) (*leveldbstore, error) {
+// NewLeveldbStore create new leveldb store implmented with Store interface
+func NewLeveldbStore(path string) (Store, error) {
 	db, err := leveldb.OpenFile(path, nil)
 	if err != nil {
 		return nil, errors.WithStack(err)

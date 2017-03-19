@@ -1,8 +1,9 @@
 package coverage
 
+// Service interface
 type Service interface {
 	GetCoverateResult(repo, commitID string) (*CoverateResult, error)
-	GetCommits(repo, ref string) ([]*Commit, error)
+	GetCommits(repo, ref, last string, limit int) ([]*Commit, error)
 	SaveCommit(commit *Commit) error
 	SaveCoverateResult(result *CoverateResult) error
 }
@@ -11,7 +12,8 @@ type service struct {
 	store Store
 }
 
-func NewService(store Store) *service {
+// NewService func
+func NewService(store Store) Service {
 	return &service{store}
 }
 

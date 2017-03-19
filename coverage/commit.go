@@ -1,5 +1,6 @@
 package coverage
 
+// Commit data
 type Commit struct {
 	ID           string
 	Repo         string
