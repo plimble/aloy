@@ -2,17 +2,20 @@ package webhook
 
 import "time"
 
+// GithubSenderWebhookResult struct
 type GithubSenderWebhookResult struct {
 	Login     string `json:"login"`
 	AvatarURL string `json:"avatar_url"`
 }
 
+// GithubHeadCommitWebHookResult struct
 type GithubHeadCommitWebHookResult struct {
 	ID        string `json:"id"`
 	Message   string `json:"message"`
 	Timestamp string `json:"timestamp"`
 }
 
+// GithubRepositoryWebhookResult struct
 type GithubRepositoryWebhookResult struct {
 	Name        string `json:"name"`
 	FullName    string `json:"full_name"`
@@ -21,6 +24,7 @@ type GithubRepositoryWebhookResult struct {
 	CloneURL    string `json:"clone_url"`
 }
 
+// GithubWebHookResult struct
 type GithubWebHookResult struct {
 	Ref        string                         `json:"ref"`
 	After      string                         `json:"after"`

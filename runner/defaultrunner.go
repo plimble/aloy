@@ -1,4 +1,4 @@
-package testrunner
+package runner
 
 import (
 	"os/exec"
@@ -6,6 +6,7 @@ import (
 	"strconv"
 )
 
+// DefaultRunnerFunc the default runner
 func DefaultRunnerFunc(msg Message, result chan Result, opt *Options) {
 	var usr string
 	var pwd string

@@ -1,4 +1,4 @@
-package testrunner
+package runner
 
 import (
 	"testing"
@@ -6,38 +6,36 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-type TestRunnerServiceSuite struct {
+type RunnerServiceSuite struct {
 	suite.Suite
 	service *service
 }
 
-func TestTestRunnerServiceSuite(t *testing.T) {
-	suite.Run(t, &TestRunnerServiceSuite{})
+func TestRunnerServiceSuite(t *testing.T) {
+	suite.Run(t, &RunnerServiceSuite{})
 }
 
-func (t *TestRunnerServiceSuite) SetupTest() {
+func (t *RunnerServiceSuite) SetupTest() {
 	t.service = NewService(Options{
-		MaxQueue:       10,
-		MaxRunner:      5,
-		GithubUsername: "GithubUsername",
-		GithubPassword: "GithubPassword",
-		GitlabUsername: "GitlabUsername",
-		GitLabPassword: "GitLabPassword",
-	})
+		MaxQueue:          10,
+		MaxRunner:         5,
+		GithubAccessToken: "GithubUsername",
+		GitlabAccessToken: "GithubPassword",
+	}).(*service)
 }
 
-func (t *TestRunnerServiceSuite) TearDownTest() {
+func (t *RunnerServiceSuite) TearDownTest() {
 	t.service.Close()
 }
 
-func (t *TestRunnerServiceSuite) TestSettingOptions() {
+func (t *RunnerServiceSuite) TestSettingOptions() {
 	t.Equal(10, t.service.opt.MaxQueue)
 	t.Equal(5, t.service.opt.MaxRunner)
 	t.Nil(t.service.opt.ResultFunc)
 	t.Nil(t.service.opt.RunnerFunc)
 }
 
-func (t *TestRunnerServiceSuite) TestRun() {
+func (t *RunnerServiceSuite) TestRun() {
 	quite := make(chan bool)
 	t.service.SetRunnerFunc(func(msg Message, result chan Result, opt *Options) {
 		result <- Result{

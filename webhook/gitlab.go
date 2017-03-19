@@ -2,6 +2,7 @@ package webhook
 
 import "time"
 
+// GitlabProjectWebhookResult struct
 type GitlabProjectWebhookResult struct {
 	Name              string `json:"name"`
 	Description       string `json:"description"`
@@ -10,12 +11,14 @@ type GitlabProjectWebhookResult struct {
 	HTTPURL           string `json:"http_url"`
 }
 
+// GitlabCommitsWebhookResult struct
 type GitlabCommitsWebhookResult struct {
 	ID        string `json:"id"`
 	Message   string `json:"message"`
 	Timestamp string `json:"timestamp"`
 }
 
+// GitlabWebhookResult struct
 type GitlabWebhookResult struct {
 	Ref        string                        `json:"ref"`
 	After      string                        `json:"after"`

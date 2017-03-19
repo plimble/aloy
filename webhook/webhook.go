@@ -1,5 +1,6 @@
 package webhook
 
+// Webhook data
 type Webhook struct {
 	Provider        string
 	SenderName      string

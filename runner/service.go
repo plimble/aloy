@@ -1,18 +1,20 @@
-package testrunner
+package runner
 
+// Service runner interface
 type Service interface {
 	Enqueue(msg Message)
 	SetResultFunc(resultFunc ResultFunc)
-	SetRunnerFunc(runnerFunc RunnerFunc)
+	SetRunFunc(runFunc RunFunc)
 	Close()
 }
 
+// Options runner
 type Options struct {
 	MaxQueue          int
 	MaxRunner         int
 	GitlabAccessToken string
 	GithubAccessToken string
-	RunnerFunc        RunnerFunc
+	RunFunc           RunFunc
 	ResultFunc        ResultFunc
 	GoTestTags        string
 }
@@ -25,7 +27,8 @@ type service struct {
 	runner     []*runner
 }
 
-func NewService(opt Options) *service {
+// NewService create a new service
+func NewService(opt Options) Service {
 	s := &service{
 		opt: opt,
 	}
@@ -62,8 +65,8 @@ func (s *service) SetResultFunc(resultFunc ResultFunc) {
 	s.opt.ResultFunc = resultFunc
 }
 
-func (s *service) SetRunnerFunc(runnerFunc RunnerFunc) {
-	s.opt.RunnerFunc = runnerFunc
+func (s *service) SetRunFunc(runFunc RunFunc) {
+	s.opt.RunFunc = runFunc
 }
 
 func (s *service) Close() {

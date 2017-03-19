@@ -1,5 +1,6 @@
-package testrunner
+package runner
 
+// Message for enqueue
 type Message struct {
 	Provider        string
 	SenderName      string

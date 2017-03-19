@@ -6,6 +6,7 @@ var (
 	config *Config
 )
 
+// Config app
 type Config struct {
 	Addr           string `default:":4400" required:"true"`
 	GoTestTags     string
@@ -17,6 +18,7 @@ type Config struct {
 	MaxRunner      int `default:":5" required:"true"`
 }
 
+// Get config func
 func Get() *Config {
 	config := &Config{}
 	goconfig.Process("aloy", config)

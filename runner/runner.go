@@ -1,6 +1,9 @@
-package testrunner
+package runner
 
-type RunnerFunc func(msg Message, result chan Result, opt *Options)
+// RunFunc for run runner
+type RunFunc func(msg Message, result chan Result, opt *Options)
+
+// ResultFunc for get the result after runner finished
 type ResultFunc func(result Result)
 
 type runner struct {
@@ -33,8 +36,8 @@ func (r *runner) run() {
 		for {
 			select {
 			case msg := <-r.channel:
-				if r.opt.RunnerFunc != nil {
-					r.opt.RunnerFunc(msg, r.result, r.opt)
+				if r.opt.RunFunc != nil {
+					r.opt.RunFunc(msg, r.result, r.opt)
 				}
 			case <-r.quiteRunner:
 				return

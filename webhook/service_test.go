@@ -1,7 +1,6 @@
 package webhook
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -10,7 +9,7 @@ import (
 
 type WebhookServiceSuite struct {
 	suite.Suite
-	service *service
+	service Service
 }
 
 func TestWebhookServiceSuite(t *testing.T) {
@@ -280,7 +279,6 @@ func (t *WebhookServiceSuite) TestParseGitlabWebhook() {
 	`)
 
 	timestamp, _ := time.Parse(time.RFC3339, "2012-01-03T23:36:29+02:00")
-	fmt.Println(timestamp.Unix())
 
 	expWebhook := &Webhook{
 		Provider:        "gitlab",

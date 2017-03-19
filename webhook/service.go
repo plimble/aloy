@@ -7,6 +7,8 @@ import (
 )
 
 //go:generate mockery -name Service -case underscore -outpkg mock -output ./mock
+
+// Service webhook interface
 type Service interface {
 	ParseGithubWebhook(payload []byte) (*Webhook, error)
 	ParseGitlabWebhook(payload []byte) (*Webhook, error)
@@ -14,7 +16,8 @@ type Service interface {
 
 type service struct{}
 
-func NewService() *service {
+// NewService webhook
+func NewService() Service {
 	return &service{}
 }
 
