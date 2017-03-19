@@ -8,14 +8,12 @@ var (
 
 // Config app
 type Config struct {
-	Addr           string `default:":4400" required:"true"`
-	GoTestTags     string
-	GithubUsername string
-	GithubPassword string
-	GitlabUsername string
-	GitlabPassword string
-	MaxQueue       int `default:":100" required:"true"`
-	MaxRunner      int `default:":5" required:"true"`
+	Addr              string `default:":4400" required:"true"`
+	GoTestTags        string
+	GithubAccessToken string
+	GitlabAccessToken string
+	MaxQueue          int `default:":100" required:"true"`
+	MaxRunner         int `default:":5" required:"true"`
 }
 
 // Get config func

@@ -37,7 +37,12 @@ func (r *runner) run() {
 			select {
 			case msg := <-r.channel:
 				if r.opt.RunFunc != nil {
-					r.opt.RunFunc(msg, r.result, r.opt)
+					if msg.Provider == "github" && r.opt.GithubAccessToken != "" {
+						r.opt.RunFunc(msg, r.result, r.opt)
+					}
+					if msg.Provider == "gitlab" && r.opt.GitlabAccessToken != "" {
+						r.opt.RunFunc(msg, r.result, r.opt)
+					}
 				}
 			case <-r.quiteRunner:
 				return
